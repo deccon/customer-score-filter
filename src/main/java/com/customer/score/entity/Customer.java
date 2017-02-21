@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * Customer entity class
- * 
  */
 public class Customer {
     
@@ -49,6 +48,10 @@ public class Customer {
     public int getScore() {
         return score;
     }
+    
+    public void setScore(int score) {
+        this.score = score;;
+    }
 
 	@Override
 	public boolean equals(Object obj) {
@@ -67,14 +70,13 @@ public class Customer {
 
 	@Override
 	public int hashCode() {
-		return this.getLegalId().hashCode() * this.getName().hashCode()
-				* this.getYearOfBirth().hashCode();
+		return this.getName().hashCode() * this.getLegalId().hashCode();
 	}
 
 	@Override
 	public String toString() {
 		return "Customer [name=" + name + ", yearOfBirth=" + yearOfBirth
-				+ ", legalId=" + legalId + ", address=" + address + "]";
+				+ ", legalId=" + legalId + ", address=" + address + ", score=" + score + "]";
 	}
 
 }
