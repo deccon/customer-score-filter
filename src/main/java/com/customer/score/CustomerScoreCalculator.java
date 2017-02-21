@@ -1,18 +1,19 @@
 package com.customer.score;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
-import java.util.List;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.http.HttpResponse;
-import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.apache.http.message.BasicNameValuePair;
 
 import com.customer.score.entity.Customer;
 
@@ -29,15 +30,24 @@ public class CustomerScoreCalculator {
 		
 		HttpPost request = new HttpPost(CUSTOMER_SCORE_URL);
 		request.addHeader("Content-Type", "application/json");
+		request.addHeader("Authorization", "APIKEY ha861ba6rds7d");
 		
-		List<NameValuePair> postBody = setPostBody(customer);
+		ObjectMapper objectMapper = new ObjectMapper();
 		
 		
 		try {
-			request.setEntity(new UrlEncodedFormEntity(postBody));
+		    String json = objectMapper.writeValueAsString(customer);
+            System.out.println(json);
+		    request.setEntity(new StringEntity(json));
 			HttpResponse response = httpClient.execute(request);
 			
-			System.out.println(response.getEntity());
+			InputStream is = response.getEntity().getContent();
+			System.out.println("status:" + response.getStatusLine().getStatusCode());
+			System.out.println("<" + is.toString());
+			
+			BufferedReader rd = new BufferedReader(new InputStreamReader(is));
+			String response1 = is.toString();
+			
 		} catch (ClientProtocolException e) {
 			e.printStackTrace();
 		} catch (UnsupportedEncodingException e) {
@@ -47,14 +57,4 @@ public class CustomerScoreCalculator {
 		}
 	}
 
-	private List<NameValuePair> setPostBody(Customer customer) {
-		List<NameValuePair> body = new ArrayList<NameValuePair>();
-		
-		body.add(new BasicNameValuePair("name", customer.getName()));
-		body.add(new BasicNameValuePair("yob", customer.getYearOfBirth()));
-		body.add(new BasicNameValuePair("legalID", customer.getLegalId()));
-		body.add(new BasicNameValuePair("address", customer.getAddress()));
-		
-		return body;
-	}
 }

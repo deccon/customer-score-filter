@@ -1,14 +1,25 @@
 package com.customer.score.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * Customer entity class
  * 
  */
 public class Customer {
+    
+    @JsonProperty("name")
 	private String name;
+	
+	@JsonProperty("yob")
 	private String yearOfBirth;
+	
+	@JsonProperty("legalID")
 	private String legalId;
+	
+	@JsonProperty("address")
 	private String address;
+	
 	private int score;
 
 	public Customer(String name, String yearOfBirth, String legalId,
@@ -35,13 +46,9 @@ public class Customer {
 		return address;
 	}
 
-	public int getScore() {
-		return score;
-	}
-
-	public void setScore(int score) {
-		this.score = score;
-	}
+    public int getScore() {
+        return score;
+    }
 
 	@Override
 	public boolean equals(Object obj) {

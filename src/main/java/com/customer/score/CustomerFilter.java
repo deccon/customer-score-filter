@@ -1,5 +1,6 @@
 package com.customer.score;
 
+import java.util.Iterator;
 import java.util.Set;
 
 import com.customer.score.entity.Customer;
@@ -11,12 +12,14 @@ public class CustomerFilter {
 		CustomerFilter filter = new CustomerFilter();
 		Set<Customer> allCustomers;
 
+
 		long start = System.currentTimeMillis();
 
 		if (args.length > 0) {
 
 			String fileName = args[0];
 			allCustomers = filter.processCSVFile(fileName);
+			System.out.println(allCustomers.size());
 			filter.processCustomerScores(allCustomers);
 		}
 
@@ -29,8 +32,11 @@ public class CustomerFilter {
 	private void processCustomerScores(Set<Customer> allCustomers) {
 		CustomerScoreCalculator scoreCalculator = new CustomerScoreCalculator();
 		
-		for(Customer customer: allCustomers){			
-			scoreCalculator.sendCustomerScoreRequest(customer);
+		for(int i = 0; i < 1; i++){
+		    
+		    Iterator iter = allCustomers.iterator();
+		    
+			scoreCalculator.sendCustomerScoreRequest((Customer) iter.next());
 		}
 		
 	}

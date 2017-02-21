@@ -1,0 +1,5 @@
+com/customer/score/entity/Customer.class
+com/customer/score/CustomerFileParser.class
+com/customer/score/CustomerFilter.class
+com/customer/score/CustomerScoreCalculator.class
+com/customer/score/CustomerScoreConstants.class
